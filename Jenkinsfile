@@ -1,18 +1,19 @@
 // Declarative //
 pipeline {
-    agent any
-    stages { 
-        stage('Example') {
+    agent none 
+    stages {
+        stage('Example Build') {
+            agent { docker 'maven:3-alpine' } 
             steps {
-                echo 'This is the build stage'
+                echo 'Hello, Maven'
+                sh 'mvn --version'
             }
-         stage('Example') {
+        }
+        stage('Example Test') {
+            agent { docker 'openjdk:8-jre' } 
             steps {
-                echo 'This is the execution stage'
-            }
-         stage('Example') {
-            steps {
-                echo 'This is the deployment stage'
+                echo 'Hello, JDK'
+                sh 'java -version'
             }
         }
     }
